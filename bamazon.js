@@ -40,18 +40,21 @@ function chooseOne(){
             for(i = 0; i < res.length; i++){
                 if(res[i].id == inquirerResponse.item){
                     product = res[i];
+                    console.log(inquirerResponse.item)
+                    console.log(product.stock)
+                    console.log(inquirerResponse.quantity)
                 }
             }
             if(product.stock > parseInt(inquirerResponse.quantity)){
                 connection.query(
                     "UPDATE products SET ? WHERE ?",
                     [
-                    {
-                        stock: product.stock - parseInt(inquirerResponse.quantity)
-                    },
-                    {
-                        id: product.item
-                    }
+                        {
+                            stock: product.stock - inquirerResponse.quantity
+                        },
+                        {
+                            id: inquirerResponse.item
+                        }
                     ]
                 );
                 console.log("\nYou are buying "+ inquirerResponse.quantity + " for "
